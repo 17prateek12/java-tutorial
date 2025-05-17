@@ -1,0 +1,37 @@
+Q1 : Why file name and class name must be the same?
+A1 : In java, if you define a public class, the filename must match the class name exactly (including case). If you name something else
+the compiler will throw an error like class <Name> is public, should be declare in a file named Name.java
+
+Q2 : What does public static void main(String[] args) mean?
+A2 : This is entry point of java application. Let's break it:
+     _________________________________________________________________________
+    |
+    | Part            |      Meaning
+    |1. public        | Accessible from anywhere (JVM need to call it)
+    |2. static        | Belongs to class, not an object (so JVM can call it without creating an object)
+    |3. void          | it return nothing
+    |4. main          | The name of the method JVM look for
+    |5. String[] args | Accepts command-line arguments as an array of string
+    |_________________________________________________________________________
+
+Q3 : What is the difference between System.out.print and System.out.println?
+A3 : System.out.print() : Print text on the same line, does not move to the next line
+     O/P :  Is java fun trueIs java hard false
+
+     System.out.println() : Print text and moves to the next line afterward
+     O/P : Is java fun true
+           Is java hard false
+
+Q4 : What is difference between signed and unsigned ?
+A4 :  unsigned: only positive number and zero, all bit are used for value - no bit is reserved for sign.
+                unsigned range : 0 to 255, 00000000 -> 0 - 11111111 -> 255
+                Unsigned is useful when you know the value will never be negative and want to maximize the positive range.
+                Java does not support unsigned types for byte, short, int, or long by default
+                Java treats char as unsigned 16-bit (range 0 to 65535)
+                Java 8 added support for some unsigned operations using helper methods like Integer.toUnsignedString()
+
+      signed: Can store both positive and negative numbers
+              the most significant bit(leftmost) is used to indicate the sign: 0xxxxxxx -> positive number, 1xxxxxxx -> negative number
+              signed range: -128 to 127
+              Signed is needed for calculations with both negative and positive numbers
+
