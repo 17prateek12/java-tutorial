@@ -132,6 +132,7 @@ Print value 23
 ```
 <br />
 In ShallowCopyClass.java 
+
 ```
 Car(Car other) {
     this.model = other.model;       // Shallow copy of a String (safe because String is immutable)
