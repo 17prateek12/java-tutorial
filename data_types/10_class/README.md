@@ -288,3 +288,228 @@ deepCopy(obj)
 | 4. `SerializationUtils.clone()` | ✅ Apache Commons | ✅                  | ❌ Slower    | Quick prototyping           |
 | 5. Java Serialization           | ❌                | ✅                  | ❌ Slower    | No extra libraries needed   |
 
+
+## Access Modifier
+
+In Java, access modifiers define the visibility or accessibility of classes, methods, and variables from different parts of your code. Here's a detailed breakdown:
+
+#### 1. `public`
+* Accessible from everywhere — any other class in any package.
+<br/>
+
+**Use Case:** When you want something to be universally available.
+```
+┌──────────────┐
+│  Class A     │  <-- public member
+└──────────────┘
+      ↓ Accessible
+┌──────────────┐
+│  Any Class   │ (any package)
+└──────────────┘
+```
+```
+public class MyClass {
+    public int x; // accessible everywhere
+}
+
+```
+
+
+#### 2. `protected`
+* Accessible within the same package.
+* Also accessible in subclasses, even if they are in different packages.
+
+
+<br />
+
+**Use Case:** When extending a class across packages but want to hide from the rest of the world.
+```
+mypackage:
+┌──────────────┐
+│  Class A     │
+│ protected x  │
+└──────────────┘
+      ↓ Same package ✅
+┌──────────────┐
+│  Class B     │
+└──────────────┘
+
+otherpackage:
+┌──────────────┐
+│ Subclass C   │ extends A ✅
+└──────────────┘
+
+Non-subclass in another package ❌
+```
+```
+class Parent {
+    protected int value;
+}
+
+class Child extends Parent {
+    void show() {
+        System.out.println(value); // valid
+    }
+}
+```
+
+#### 3. `default` (no modifier)
+* Accessible only within the same package.
+* Not accessible outside the package.
+
+<br />
+
+**Use Case:** When the class or method is internal to the package and not part of public API.
+```
+mypackage:
+┌──────────────┐
+│  Class A     │
+│  default int │
+└──────────────┘
+      ↓
+┌──────────────┐
+│  Class B     │ (same package) ✅
+└──────────────┘
+
+otherpackage:
+┌──────────────┐
+│  Class C     │ (different package) ❌
+└──────────────┘
+```
+```
+class MyClass { // default access
+    int x; // default access
+}
+```
+
+#### 4. `private`
+* Accessible only within the class it is declared in.
+* Not visible to subclasses or other classes, even in the same package.
+
+<br />
+
+**Use Case:** For encapsulation, hiding internal details of the class.
+```
+┌──────────────┐
+│  Class A     │
+│  ┌────────┐  │
+│  │ private │  <-- Only accessible inside A
+│  └────────┘  │
+└──────────────┘
+```
+
+```
+public class MyClass {
+    private int secret;
+
+    public void setSecret(int s) {
+        secret = s; // allowed
+    }
+}
+```
+<br />
+
+### 🏛️ Access Modifiers and Class Level
+| Modifier    | Top-Level Classes | Inner Classes | Methods/Fields |
+| ----------- | ----------------- | ------------- | -------------- |
+| `public`    | ✅ Yes             | ✅ Yes         | ✅ Yes          |
+| `protected` | ❌ No              | ✅ Yes         | ✅ Yes          |
+| *default*   | ✅ Yes             | ✅ Yes         | ✅ Yes          |
+| `private`   | ❌ No              | ✅ Yes         | ✅ Yes          |
+
+<br />
+
+### 🧩 Summary Table of Accessibility
+| Access Level | Same Class | Same Package | Subclass (Different Package) | Other Packages |
+| ------------ | ---------- | ------------ | ---------------------------- | -------------- |
+| `public`     | ✅          | ✅            | ✅                            | ✅              |
+| `protected`  | ✅          | ✅            | ✅                            | ❌              |
+| *default*    | ✅          | ✅            | ❌                            | ❌              |
+| `private`    | ✅          | ❌            | ❌                            | ❌              |
+
+
+## Type of classes
+
+#### 1. Final Class
+
+* When a variable, function, or class is declared final, its value persists throughout the program.
+* Declaring a method with the final keyword indicates that the method cannot be overridden by subclasses. That is a class that is marked final cannot be subclasses.
+* This is very useful when creating immutable classes such as  String classes.
+* A class cannot be mutated unless it is declared final.  If only all the members of the class is final then it can't be mutated otherwise it can be mutated
+
+#### 2. Static Class
+
+Static is a Java word that explains how objects are kept in memory. A static object belongs to that class rather than instances of that class. The primary function of the class is to provide blueprints for the inherited classes. A static class has only static members. An object cannot be created for a static class.
+
+* In Java, the term static class typically refers to a static nested class, because only nested classes can be declared static.
+
+##### 🔹 What is a Static Class?
+In Java:
+* Top-level classes (non-nested) cannot be declared static.
+* Nested classes (defined inside another class) can be declared sta tic.
+
+
+#### 3. Abstract Class
+In Java, an abstract class is a class that cannot be instantiated on its own and is meant to be inherited by other classes. It can have abstract methods (methods without a body) as well as concrete methods (with body). It's used to define a base class with shared behavior and to enforce implementation in derived classes.
+
+##### 🔷 Key Points:
+
+* Use `abstract` keyword.
+* Can have both abstract and non-abstract methods.
+* Cannot be instantiated.
+* Subclasses must implement all abstract methods unless the subclass is also abstract.
+
+```
+         Animal (abstract)
+         /          \
+     Dog           Cat
+```
+
+##### ✅ Use Cases of Abstract Classes:
+* Define a base class for a family of related types.
+* When you want to provide partial implementation of functionality.
+* When multiple derived classes must override certain behavior.
+
+#### 4. Concrete Class
+A concrete class is a regular class in Java that provides complete implementation for all its methods. Unlike abstract classes, a concrete class can be instantiated directly.
+
+✅ Key Features of Concrete Class:
+* Not marked with the abstract keyword.
+* Implements all methods (no abstract methods).
+* Can be used to create objects.
+* Can extend abstract classes or implement interfaces, but must provide full method implementations.
+
+#### 5. POJO Class
+POJO stands for Plain Old Java Object. It's a simple Java class used to represent data. A POJO class does not extend or implement any specialized classes/interfaces (like Serializable, Remote, etc. – unless explicitly needed), and it mainly focuses on encapsulating data with getters and setters.
+
+
+✅ Key Characteristics of a POJO
+
+| Feature          | Description                                                                          |
+| ---------------- | ------------------------------------------------------------------------------------ |
+| Simplicity       | No business logic, just fields and methods                                           |
+| No inheritance   | Doesn’t extend any class or implement interfaces (except if needed)                  |
+| Private fields   | All variables are usually `private`                                                  |
+| Public accessors | Uses `getters` and `setters` for field access                                        |
+| No annotations   | Should not depend on frameworks or annotations (unless converted to JavaBeans, etc.) |
+
+
+🧠 Why Use POJOs?
+* Clean structure for data modeling
+* Easier to test
+* Easily serializable (with frameworks like Jackson, Gson)
+* Used widely in REST APIs, ORM tools like Hibernate, etc.
+
+
+#### 6. Singleton class
+
+A singleton class is one that has just one object at any one moment. Even yet, if we try to create an instance again, the newly created instance refers to the previous one. Any modification we make to the class through any instance impacts the variables in that specific instance as well.
+<br />
+<br />
+It's useful when exactly one object is needed to coordinate actions across a system — like for logging, database access, config settings, etc.
+
+✅ Key Characteristics
+* Private constructor: To prevent external instantiation.
+* Private static instance: Holds the single object.
+* Public static method: Returns the instance.
+
