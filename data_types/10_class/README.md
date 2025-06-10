@@ -513,3 +513,66 @@ It's useful when exactly one object is needed to coordinate actions across a sys
 * Private static instance: Holds the single object.
 * Public static method: Returns the instance.
 
+
+#### 6. Inner class
+
+An inner class is a class defined within another class. It helps logically group classes that are only used in one place, increases encapsulation, and can lead to more readable and maintainable code.
+
+🔸 Types of Inner Classes in Java.
+<br />
+Java supports 4 main types of inner classes:
+
+* Non-static Inner Class
+* Static Nested Class
+* Local Inner Class
+* Anonymous Inner Class
+
+##### 🧩 6.1 Non-static Inner Class/Nested Inner Class
+
+* Belongs to an instance of the outer class.
+* Can access all members (including private) of the outer class.
+
+##### 🧩 6.2. Static Nested Class
+* Declared with static keyword.
+* Can access only static members of the outer class.
+* Does not require an outer class instance.
+
+##### 🧩 6.3. Local Inner Class
+* Defined inside a method.
+* Scope is limited to the method.
+* Can access final or effectively final variables of the method.
+
+##### 🧩 6.4. Anonymous Inner Class
+* A class without a name.
+* Used for instantiating interface or abstract class on the spot.
+* Common in GUI programming and event handling.
+
+
+
+```
++------------------+
+|     Outer Class  |
+|                  |
+| +--------------+ |
+| | Inner Class  | |  ← Non-static Inner Class
+| +--------------+ |
+|                  |
+| +--------------+ |
+| | static class | |  ← Static Nested Class
+| +--------------+ |
+|                  |
+| +--------------+ |
+| | void method()| |
+| |  {           | |
+| |   class LI   | |  ← Local Inner Class
+| |  }           | |
+| +--------------+ |
+|                  |
+| Interface/Abstract|
+| Class Reference → |
+|  new Class() {   |  ← Anonymous Inner Class
+|     ...          |
+|  }               |
++------------------+
+
+```
