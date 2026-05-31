@@ -46,7 +46,7 @@ public class ShallowCopyClass {
         Car thirdCar = new Car(mycar);
         thirdCar.engine.horsepower = 200;
         thirdCar.model = "Maruti";
-        thirdCar.engine.owner = "Mansi";
+        thirdCar.engine.owner = "Ridhi";
 
 
         //----------------------------------Shallow copy of second car through copy contructor

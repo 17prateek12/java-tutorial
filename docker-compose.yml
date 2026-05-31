@@ -1,0 +1,24 @@
+services:
+  java21:
+    image: openjdk:21
+    container_name: java21_env
+    volumes:
+      - ./java:/java
+    working_dir: /java
+    command: bash
+
+  java9:
+    image: openjdk:9-jdk
+    container_name: java9_env
+    volumes:
+      - ./java:/java
+    working_dir: /java
+    command: bash
+
+  java8:
+    image: openjdk:8-jdk
+    container_name: java8_env
+    volumes:
+      - ./java:/java
+    working_dir: /java
+    command: bash
